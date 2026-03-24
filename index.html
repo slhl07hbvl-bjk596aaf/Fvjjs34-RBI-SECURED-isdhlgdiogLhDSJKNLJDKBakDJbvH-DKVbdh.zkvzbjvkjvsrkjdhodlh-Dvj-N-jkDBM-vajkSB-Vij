@@ -4,156 +4,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Interface</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; padding: 15px; margin: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; padding: 10px; margin: 0; }
+        .payment-card { background: white; width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; }
         
-        /* Main Payment Card */
-        .payment-card { background: white; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; }
-        .header { background: #2196F3; color: white; text-align: center; padding: 18px; font-weight: bold; font-size: 1.25em; }
-        .content { padding: 20px; }
-        
+        .header { background: #2196F3; color: white; text-align: center; padding: 15px; font-weight: bold; font-size: 1.3em; }
+        .content { padding: 15px; }
+
+        /* Timer Section */
+        .timer-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; color: #333; }
+        .timer-box { display: flex; gap: 5px; }
+        .digit { background: #2196F3; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.9em; }
+
         /* Detail Rows */
-        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #f0f0f0; padding: 12px; border-radius: 8px; }
-        .label { color: #888; font-size: 0.85em; }
-        .value { font-weight: bold; color: #333; }
-        .copy-btn { color: #2196F3; border: 1.5px solid #2196F3; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
+        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border: 1px solid #90caf9; padding: 12px; border-radius: 6px; }
+        .label { color: #555; font-size: 1em; }
+        .value { font-weight: bold; color: #333; font-size: 1.1em; }
+        .copy-btn { color: #2196F3; border: 1px solid #2196F3; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85em; text-transform: uppercase; font-weight: 500; }
+
+        /* Marked Sections from Image */
+        .help-link { color: #2196F3; text-decoration: none; font-size: 1.05em; display: flex; align-items: center; margin-bottom: 15px; }
+        .instruction-text { color: #2196F3; font-size: 1.05em; margin: 20px 0 10px 0; display: block; }
         
-        /* App Grid */
-        .upi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-        .upi-item { border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px 12px; display: flex; align-items: center; justify-content: flex-start; background: #fff; cursor: pointer; text-decoration: none; }
-        .upi-item img { height: 26px; width: auto; margin-right: 12px; }
-        .upi-item span { font-size: 1.05em; font-weight: 600; color: #444; }
+        .upi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .upi-item { border: 1px solid #ccc; border-radius: 8px; padding: 15px; display: flex; align-items: center; justify-content: center; background: #fff; text-decoration: none; }
+        .upi-item img { height: 26px; margin-right: 10px; }
+        .upi-item span { font-size: 1.1em; font-weight: 500; color: #444; }
 
-        /* Form Elements */
-        .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; }
-        .submit-btn { width: 100%; background: #2196F3; color: white; border: none; padding: 16px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
-        .notice { color: #d32f2f; font-size: 0.8em; margin-top: 20px; line-height: 1.5; }
+        /* Input and Button */
+        .utr-row { display: flex; align-items: center; margin-bottom: 15px; }
+        .utr-label { width: 60px; font-weight: bold; color: #333; }
+        .input-field { flex: 1; padding: 12px; border: none; border-bottom: 1px solid #ddd; outline: none; font-size: 1em; color: #999; }
+        .submit-btn { width: 100%; background: #2196F3; color: white; border: none; padding: 15px; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1em; margin-bottom: 15px; }
 
-        /* 1. DARK SUBMITTED POPUP (The small square) */
-        #status-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            z-index: 2000;
-            width: 140px;
-        }
+        /* Notice Section */
+        .notice-title { color: #d32f2f; font-weight: bold; font-size: 1.1em; margin-bottom: 5px; }
+        .notice-item { color: #333; font-size: 0.95em; line-height: 1.4; margin-bottom: 3px; }
+        .red-text { color: #d32f2f; font-weight: 500; }
 
-        /* 2. FINAL SUCCESS PAGE */
-        #success-page {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 3000;
-            text-align: center;
-        }
-        .success-header { background: #2196F3; color: white; padding: 18px; font-weight: bold; font-size: 1.25em; margin-bottom: 60px; }
-        .success-icon { color: #4CAF50; font-size: 80px; margin-bottom: 30px; }
-        .success-text { color: #333; font-size: 1.4em; font-weight: 400; padding: 0 20px; line-height: 1.4; }
+        /* Footer Icons */
+        .footer { display: flex; justify-content: center; align-items: center; gap: 15px; padding: 20px 0; border-top: 1px solid #eee; margin-top: 10px; }
+        .footer img { height: 20px; opacity: 0.8; }
+
+        /* Popups */
+        #status-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: white; padding: 30px; border-radius: 12px; text-align: center; z-index: 2000; width: 130px; }
+        #success-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 3000; text-align: center; }
     </style>
 </head>
-<body onload="setupInterface()">
+<body onload="startTimer()">
 
-<!-- Popup 1: Dark Submitted Box -->
-<div id="status-popup">
-    <div style="font-size: 40px; margin-bottom: 10px;">✓</div>
-    <div style="font-size: 14px;">Submitted</div>
-</div>
-
-<!-- Popup 2: Full Success Page -->
+<div id="status-popup"><div style="font-size:40px">✓</div><div>Submitted</div></div>
 <div id="success-page">
-    <div class="success-header">Payment</div>
-    <div class="success-icon">✔</div>
-    <div class="success-text">UTR submitted.<br>Verification in progress.</div>
+    <div class="header">Payment</div>
+    <div style="color:#4CAF50; font-size:80px; margin: 60px 0 20px;">✔</div>
+    <div style="font-size:1.4em; padding:0 20px;">UTR submitted.<br>Verification in progress.</div>
 </div>
 
 <div class="payment-card" id="main-card">
     <div class="header">Payment</div>
     <div class="content">
+        <div class="timer-row">
+            <span>Order will be closed in:</span>
+            <div class="timer-box">
+                <span class="digit" id="min">3</span> : <span class="digit" id="sec">0</span>
+            </div>
+        </div>
+
         <div class="row">
-            <div><div class="label">Amount</div><div class="value">₹ <span id="display_amount">3500</span></div></div>
-            <div class="copy-btn" onclick="copyToClipboard('display_amount')">Copy</div>
+            <span class="label">Amount</span>
+            <span class="value">₹ 3500</span>
+            <div class="copy-btn">COPY</div>
         </div>
         <div class="row">
-            <div><div class="label">VPA/UPI ID</div><div class="value" id="display_upi">asmaakter456003-2@okaxis</div></div>
-            <div class="copy-btn" onclick="copyToClipboard('display_upi')">Copy</div>
+            <span class="label">VPA/UPI ID</span>
+            <span class="value">asmaakter456003-2@okaxis</span>
+            <div class="copy-btn">COPY</div>
         </div>
+
+        <a href="#" class="help-link">❔How to transfer money 🔗</a>
 
         <div class="upi-grid">
-            <div class="upi-item" onclick="openApp('phonepe')"><img src="https://img.icons8.com"><span>PhonePe</span></div>
-            <div class="upi-item" onclick="openApp('paytm')"><img src="https://img.icons8.com"><span>Paytm</span></div>
-            <div class="upi-item" onclick="openApp('gpay')"><img src="https://img.icons8.com"><span>G Pay</span></div>
-            <div class="upi-item" onclick="openApp('bhim')"><img src="https://upload.wikimedia.org"><span>BHIM</span></div>
+            <a href="upi://pay?pa=asmaakter456003-2@okaxis&am=3500" class="upi-item"><img src="https://img.icons8.com"><span>PhonePe</span></a>
+            <a href="upi://pay?pa=asmaakter456003-2@okaxis&am=3500" class="upi-item"><img src="https://img.icons8.com"><span>Paytm</span></a>
+            <a href="upi://pay?pa=asmaakter456003-2@okaxis&am=3500" class="upi-item"><img src="https://img.icons8.com"><span>G Pay</span></a>
+            <a href="upi://pay?pa=asmaakter456003-2@okaxis&am=3500" class="upi-item"><img src="https://upload.wikimedia.org"><span>BHIM</span></a>
         </div>
 
-        <p style="font-size:0.85em; color:#666; margin-bottom: 10px;">↓ Fill the UTR numbers after payment</p>
-        <!-- Numeric input restricted to 12 digits -->
-        <input type="text" id="utr_input" class="input-field" placeholder="Input 12-digit UTR number" inputmode="numeric" maxlength="12">
+        <span class="instruction-text">↓ Fill the UTR numbers after you done payment</span>
+        <div class="utr-row">
+            <span class="utr-label">UTR</span>
+            <input type="text" id="utr_input" class="input-field" placeholder="Input UTR number" maxlength="12" inputmode="numeric">
+        </div>
         <button class="submit-btn" onclick="handleSubmit()">Submit UTR</button>
 
-        <div class="notice">
-            <b>Notice:</b><br>
-            1. One UPI can only transfer money once.<br>
-            2. Don't change the payment amount.
+        <div class="notice-title">Notice:</div>
+        <div class="notice-item">1. One UPI can only transfer money <span class="red-text">once.</span></div>
+        <div class="notice-item">2. Don't change the <span class="red-text">payment amount</span> Otherwise, the order cannot be closed.</div>
+
+        <div class="footer">
+            <img src="https://img.icons8.com">
+            <img src="https://img.icons8.com">
+            <img src="https://upload.wikimedia.org">
+            <span style="font-weight:bold; color:#777; font-size:1.2em;">UPI</span>
         </div>
     </div>
 </div>
 
 <script>
-    const CONFIG = {
-        upi_id: "asmaakter456003-2@okaxis",
-        amount: "3500"
-    };
-
-    function setupInterface() {
-        document.getElementById('display_amount').innerText = CONFIG.amount;
-        document.getElementById('display_upi').innerText = CONFIG.upi_id;
-    }
-
-    function openApp(appName) {
-        let pkg = (appName==='phonepe') ? "com.phonepe.app" : (appName==='paytm') ? "net.one97.paytm" : (appName==='gpay') ? "com.google.android.apps.nbu.paisa.user" : "in.org.npci.upiapp";
-        window.location.href = `intent://pay?pa=${CONFIG.upi_id}&cu=INR#Intent;scheme=upi;package=${pkg};end`;
-    }
-
-    function copyToClipboard(id) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Copied!");
-        });
+    function startTimer() {
+        let m = 2, s = 59;
+        setInterval(() => {
+            if(s == 0) { m--; s = 59; } else { s--; }
+            document.getElementById('min').innerText = m;
+            document.getElementById('sec').innerText = s;
+        }, 1000);
     }
 
     function handleSubmit() {
-        const utrInput = document.getElementById('utr_input').value.trim();
+        const val = document.getElementById('utr_input').value;
+        if (!/^\d{12}$/.test(val)) { alert("Please enter a valid 12-digit UTR."); return; }
         
-        // REGEX CHECK: Only exactly 12 digits allowed
-        const isTwelveDigits = /^\d{12}$/.test(utrInput);
-
-        if (!isTwelveDigits) {
-            alert("Error: Please enter a valid 12-digit UTR number.");
-            return;
-        }
-
-        // Show dark popup
-        const popup = document.getElementById('status-popup');
-        popup.style.display = 'block';
-
-        // Transition to success page
+        document.getElementById('status-popup').style.display = 'block';
         setTimeout(() => {
-            popup.style.display = 'none';
+            document.getElementById('status-popup').style.display = 'none';
             document.getElementById('main-card').style.display = 'none';
             document.getElementById('success-page').style.display = 'block';
         }, 2000);
     }
 </script>
-
 </body>
 </html>
