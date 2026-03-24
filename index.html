@@ -8,7 +8,6 @@
         .payment-card { background: white; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; }
         .header { background: #2196F3; color: white; text-align: center; padding: 18px; font-weight: bold; font-size: 1.25em; }
         .content { padding: 20px; }
-        
         .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #f0f0f0; padding: 12px; border-radius: 8px; }
         .label { color: #888; font-size: 0.85em; }
         .value { font-weight: bold; color: #333; }
@@ -22,15 +21,14 @@
             padding: 15px 12px; 
             display: flex; 
             align-items: center; 
-            justify-content: center; 
+            justify-content: flex-start; 
             background: #fff; 
             cursor: pointer; 
-            transition: 0.2s; 
             text-decoration: none;
         }
-        .upi-item img { height: 26px; width: auto; margin-right: 10px; object-fit: contain; }
-        .upi-item span { font-size: 1.1em; font-weight: 600; color: #444; }
-        .upi-item.active { border: 1.5px solid #2196F3; background-color: #f0f7ff; }
+        .upi-item img { height: 26px; width: auto; margin-right: 12px; object-fit: contain; }
+        .upi-item span { font-size: 1.05em; font-weight: 600; color: #444; }
+        .upi-item:active { border: 1.5px solid #2196F3; background-color: #f0f7ff; }
 
         .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; }
         .submit-btn { width: 100%; background: #2196F3; color: white; border: none; padding: 16px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
@@ -52,24 +50,27 @@
         </div>
 
         <div class="upi-grid">
-            <!-- PhonePe -->
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item active">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAHlBMVEVHcEwqS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0xGvSshAAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAGlJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="PhonePe">
+            <!-- PhonePe Specific Link -->
+            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end" class="upi-item">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAHlBMVEVHcEwqS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0xGvSshAAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAGlJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
                 <span>PhonePe</span>
             </a>
-            <!-- Paytm -->
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAG1BMVEVHcExvS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y0Eiz+AAAAAXRSTlMAQObYZgAAAFRJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="Paytm">
+
+            <!-- Paytm Specific Link -->
+            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end" class="upi-item">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAG1BMVEVHcExvS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y0Eiz+AAAAAXRSTlMAQObYZgAAAFRJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
                 <span>Paytm</span>
             </a>
-            <!-- Google Pay -->
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAIVBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y8TzJ3AAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAF1JREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="G Pay">
+
+            <!-- Google Pay Specific Link -->
+            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end" class="upi-item">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAIVBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y8TzJ3AAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAF1JREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
                 <span>G Pay</span>
             </a>
-            <!-- BHIM -->
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAGFBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0zMvGToAAAAAnRSTlMA/1uG/zIAAABSSURBVDjLY2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/wAAAP//AwC7tS5vV1p8XwAAAABJRU5ErkJggg==" alt="BHIM">
+
+            <!-- BHIM Specific Link -->
+            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=in.org.npci.upiapp;end" class="upi-item">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAGFBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0zMvGToAAAAAnRSTlMA/1uG/zIAAABSSURBVDjLY2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/wAAAP//AwC7tS5vV1p8XwAAAABJRU5ErkJggg==" alt="">
                 <span>BHIM</span>
             </a>
         </div>
