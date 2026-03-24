@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Interface</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; padding: 15px; margin: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; padding: 15px; margin: 0; }
         .payment-card { background: white; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; }
         .header { background: #2196F3; color: white; text-align: center; padding: 18px; font-weight: bold; font-size: 1.25em; }
         .content { padding: 20px; }
@@ -13,9 +13,9 @@
         .value { font-weight: bold; color: #333; }
         .copy-btn { color: #2196F3; border: 1.5px solid #2196F3; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
         
+        /* UPI Grid matching your reference exactly */
         .upi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
         .upi-item { 
-            text-decoration: none; 
             border: 1px solid #e0e0e0; 
             border-radius: 10px; 
             padding: 15px 12px; 
@@ -24,10 +24,11 @@
             justify-content: center; 
             background: #fff; 
             cursor: pointer; 
+            transition: 0.2s; 
         }
-        .upi-item img { height: 28px; width: auto; margin-right: 10px; }
+        .upi-item img { height: 28px; width: auto; margin-right: 10px; object-fit: contain; }
         .upi-item span { font-size: 1.1em; font-weight: 600; color: #444; }
-        .upi-item:active { border-color: #2196F3; background-color: #f0f7ff; }
+        .upi-item:active { border: 1.5px solid #2196F3; background-color: #f0f7ff; }
 
         .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; }
         .submit-btn { width: 100%; background: #2196F3; color: white; border: none; padding: 16px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
@@ -48,27 +49,27 @@
             <div class="copy-btn" onclick="copyToClipboard('upi_id')">Copy</div>
         </div>
 
-        <!-- UPDATED UNIVERSAL LINKS -->
         <div class="upi-grid">
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
+            <!-- All buttons now use a JavaScript function to force open apps -->
+            <div class="upi-item" onclick="openUPI()">
                 <img src="https://img.icons8.com" alt="">
                 <span style="color:#5f259f">PhonePe</span>
-            </a>
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
+            </div>
+            <div class="upi-item" onclick="openUPI()">
                 <img src="https://img.icons8.com" alt="">
                 <span style="color:#00baf2">Paytm</span>
-            </a>
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
+            </div>
+            <div class="upi-item" onclick="openUPI()">
                 <img src="https://img.icons8.com" alt="">
                 <span>G Pay</span>
-            </a>
-            <a href="upi://pay?pa=akash7****@ybl&am=3500&cu=INR" class="upi-item">
+            </div>
+            <div class="upi-item" onclick="openUPI()">
                 <img src="https://upload.wikimedia.org" alt="">
                 <span style="color:#666">BHIM</span>
-            </a>
+            </div>
         </div>
 
-        <p style="font-size:0.85em; color:#666;">↓ Fill the UTR numbers after payment</p>
+        <p class="instruction">↓ Fill the UTR numbers after payment</p>
         <input type="text" id="utr_input" class="input-field" placeholder="Input UTR number">
         <button class="submit-btn" onclick="handleSubmit()">Submit UTR</button>
 
@@ -81,14 +82,35 @@
 </div>
 
 <script>
+    function openUPI() {
+        const upiId = "akash7****@ybl"; // Replace with your real UPI ID
+        const amount = "3500";
+        const name = "Merchant";
+        
+        // Universal UPI Link
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+        
+        // Forced Intent for Android Chrome (this solves the "not opening" issue)
+        const intentUrl = `intent://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
+
+        // Attempt to open the universal link first
+        window.location.href = upiUrl;
+
+        // Fallback for strict browsers
+        setTimeout(() => {
+            window.location.href = upiUrl;
+        }, 500);
+    }
+
     function copyToClipboard(id) {
         const text = document.getElementById(id).innerText;
         navigator.clipboard.writeText(text).then(() => alert("Copied: " + text));
     }
+
     function handleSubmit() {
         const utr = document.getElementById('utr_input').value;
-        if (utr.trim().length < 10) { alert("Please enter a valid UTR number."); }
-        else { alert("UTR submitted successfully."); }
+        if (utr.trim().length < 10) alert("Please enter a valid UTR number.");
+        else alert("UTR submitted successfully.");
     }
 </script>
 
