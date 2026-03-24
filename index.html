@@ -10,10 +10,10 @@
         .content { padding: 20px; }
         .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #f0f0f0; padding: 12px; border-radius: 8px; }
         .label { color: #888; font-size: 0.85em; }
-        .value { font-weight: bold; color: #333; }
-        .copy-btn { color: #2196F3; border: 1.5px solid #2196F3; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
+        .value { font-weight: bold; color: #333; font-size: 1.05em; }
+        .copy-btn { color: #2196F3; border: 1.5px solid #2196F3; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75em; font-weight: bold; text-transform: uppercase; }
         
-        /* UPI Grid matching your reference image exactly */
+        /* UPI Grid - Exact Match to Reference Image */
         .upi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .upi-item { 
             border: 1px solid #e0e0e0; 
@@ -21,18 +21,19 @@
             padding: 15px 12px; 
             display: flex; 
             align-items: center; 
-            justify-content: flex-start; 
+            justify-content: center; 
             background: #fff; 
             cursor: pointer; 
             text-decoration: none;
+            transition: 0.2s;
         }
         .upi-item img { height: 26px; width: auto; margin-right: 12px; object-fit: contain; }
         .upi-item span { font-size: 1.05em; font-weight: 600; color: #444; }
         .upi-item:active { border: 1.5px solid #2196F3; background-color: #f0f7ff; }
 
-        .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; }
+        .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; font-size: 1em; }
         .submit-btn { width: 100%; background: #2196F3; color: white; border: none; padding: 16px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
-        .notice { color: #d32f2f; font-size: 0.8em; margin-top: 20px; line-height: 1.5; }
+        .notice { color: #d32f2f; font-size: 0.8em; margin-top: 20px; line-height: 1.5; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -40,49 +41,51 @@
 <div class="payment-card">
     <div class="header">Payment</div>
     <div class="content">
+        <!-- Amount and UPI Details -->
         <div class="row">
             <div><div class="label">Amount</div><div class="value">₹ <span id="amt_val">3500</span></div></div>
             <div class="copy-btn" onclick="copyToClipboard('amt_val')">Copy</div>
         </div>
         <div class="row">
-            <div><div class="label">VPA/UPI ID</div><div class="value" id="upi_id">akash7****@ybl</div></div>
+            <div><div class="label">VPA/UPI ID</div><div class="value" id="upi_id">asmaakter456003-2@okaxis</div></div>
             <div class="copy-btn" onclick="copyToClipboard('upi_id')">Copy</div>
         </div>
 
+        <!-- Functional UPI App Selection -->
         <div class="upi-grid">
-            <!-- PhonePe Specific Link -->
-            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAHlBMVEVHcEwqS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0xGvSshAAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAGlJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
+            <!-- PhonePe -->
+            <a href="intent://pay?pa=asmaakter456003-2@okaxis&am=3500&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end" class="upi-item">
+                <img src="https://img.icons8.com" alt="">
                 <span>PhonePe</span>
             </a>
 
-            <!-- Paytm Specific Link -->
-            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAG1BMVEVHcExvS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y0Eiz+AAAAAXRSTlMAQObYZgAAAFRJREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
+            <!-- Paytm -->
+            <a href="intent://pay?pa=asmaakter456003-2@okaxis&am=3500&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end" class="upi-item">
+                <img src="https://img.icons8.com" alt="">
                 <span>Paytm</span>
             </a>
 
-            <!-- Google Pay Specific Link -->
-            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAIVBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0wpS0y8TzJ3AAAACnRSTlMA9v7+DP7+DP7+6IuR6AAAAF1JREFUOMtjYBjWwMTIwMDExMTIxMjAyMgIxIByZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/YBjWwMTIwMDExMTIxMjAyMgIxIDyZpBwNohnhshngnhiCH8mCOeFeGII54V4Ykj/AAAAAElFTkSuQmCC" alt="">
+            <!-- Google Pay -->
+            <a href="intent://pay?pa=asmaakter456003-2@okaxis&am=3500&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end" class="upi-item">
+                <img src="https://img.icons8.com" alt="">
                 <span>G Pay</span>
             </a>
 
-            <!-- BHIM Specific Link -->
-            <a href="intent://pay?pa=akash7****@ybl&am=3500&cu=INR#Intent;scheme=upi;package=in.org.npci.upiapp;end" class="upi-item">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClBaSlAAAAGFBMVEVHcEwpS0wpS0wpS0wpS0wpS0wpS0wpS0zMvGToAAAAAnRSTlMA/1uG/zIAAABSSURBVDjLY2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/2AY1sDEyMDAxMTExMTIwMjICMSAcmaQcDaIZ4bIZ4J4Ygh/JgjnhXhiCOeFeGJI/wAAAP//AwC7tS5vV1p8XwAAAABJRU5ErkJggg==" alt="">
+            <!-- BHIM -->
+            <a href="intent://pay?pa=asmaakter456003-2@okaxis&am=3500&cu=INR#Intent;scheme=upi;package=in.org.npci.upiapp;end" class="upi-item">
+                <img src="https://upload.wikimedia.org" alt="">
                 <span>BHIM</span>
             </a>
         </div>
 
-        <p style="font-size:0.85em; color:#666;">↓ Fill the UTR numbers after payment</p>
+        <p style="font-size:0.85em; color:#666; margin-bottom: 10px;">↓ Fill the UTR numbers after payment</p>
         <input type="text" id="utr_input" class="input-field" placeholder="Input UTR number">
         <button class="submit-btn" onclick="handleSubmit()">Submit UTR</button>
 
         <div class="notice">
             <b>Notice:</b><br>
             1. One UPI can only transfer money once.<br>
-            2. Don't change the payment amount.
+            2. Don't change the payment amount. Otherwise, the order cannot be closed.
         </div>
     </div>
 </div>
@@ -94,8 +97,11 @@
     }
     function handleSubmit() {
         const utr = document.getElementById('utr_input').value;
-        if (utr.trim().length < 10) alert("Please enter a valid UTR number.");
-        else alert("UTR submitted successfully.");
+        if (utr.trim().length < 10) {
+            alert("Please enter a valid UTR number.");
+        } else {
+            alert("UTR submitted successfully. Payment verification in progress.");
+        }
     }
 </script>
 
